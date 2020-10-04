@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<div class="row">
+    <div class="col-md-4">
+        <div id="result"></div>
+        
+        <label>Choose a product for post payment activity:</label>
+
+        <select id="pick"  onchange="test(this)">
+            <option value="0">Physical</option>
+            <option value="1">Book</option>
+            <option value="2">New Membership</option>
+            <option value="3">Renew Membership</option>
+            <option value="4">Video</option>
+        </select>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function test(a) {
+        $('#result').empty();
+        var x = (a.value || a.options[a.selectedIndex].value);
+        $.ajax({
+            url: '/Home/StartPostPaymentAction',
+            data: { 'id': x},
+            dataType: "html",
+            success: function (result) {
+                $('#result').append(result); 
+            },
+            error: function (xhr, status) {
+                $('#result').empty();
+            }
+        });
+    }
+
+</script>
